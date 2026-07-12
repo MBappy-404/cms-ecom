@@ -324,32 +324,32 @@ export default function Template2({ product }: Template2Props) {
       </header>
 
       {/* 2. Hero Section */}
-      <section className="bg-[#f8fafc]/40 border-b border-slate-100/50 py-16">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <section className="bg-[#f8fafc]/40 border-b border-slate-100/50 py-8 sm:py-12 lg:py-16">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 lg:gap-12 items-center">
           <div>
-            <h2 className="text-4xl md:text-5xl font-black text-[#1a365d] mb-5 leading-tight tracking-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-black text-[#1a365d] mb-3 sm:mb-5 leading-tight tracking-tight">
               {product.heroTitle ? sanitizeName(product.heroTitle) : sanitizeName(product.name)}
               {product.heroSubtitle && (
                 <>
                   <br />
-                  <span className="text-[#1a365d] font-bold text-3xl md:text-4xl block mt-1">
+                  <span className="text-[#1a365d] font-bold text-xl sm:text-2xl md:text-4xl block mt-1">
                     {product.heroSubtitle}
                   </span>
                 </>
               )}
             </h2>
-            <p className="text-slate-600 mb-8 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-600 mb-5 sm:mb-8 text-sm sm:text-base leading-relaxed">
               {product.description || 'উন্নতমানের প্রোডাক্ট, আকর্ষণীয় ডিজাইন এবং সেরা কোয়ালিটি— যা আপনাকে দেবে শতভাগ সন্তুষ্টির গ্যারান্টি।'}
             </p>
 
-            <div className="flex items-center gap-4 mb-8">
-              <span className="text-4xl font-extrabold text-[#1a365d]">৳ {toBanglaNum(Math.round(discountedPrice))}</span>
-              <span className="text-xl text-gray-400 line-through font-semibold">৳ {toBanglaNum(Math.round(product.price))}</span>
+            <div className="flex items-center gap-4 mb-5 sm:mb-8">
+              <span className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#1a365d]">৳ {toBanglaNum(Math.round(discountedPrice))}</span>
+              <span className="text-sm sm:text-lg lg:text-xl text-gray-400 line-through font-semibold">৳ {toBanglaNum(Math.round(product.price))}</span>
               <span className="bg-[#1a365d] text-white text-xs px-3.5 py-1.5 rounded-full font-bold shadow-2xs">{toBanglaNum(product.discount)}% ছাড়</span>
             </div>
 
             {/* Horizontal features badges */}
-            <div className="flex flex-wrap gap-3 mb-8 text-xs font-semibold text-slate-700">
+            <div className="flex flex-wrap gap-3 mb-5 sm:mb-8 text-xs font-semibold text-slate-700">
               {(product.heroBadges && product.heroBadges.length > 0
                 ? product.heroBadges
                 : ['সুতি ফ্যাব্রিক', 'আরামদায়ক ফিট', 'কালার গ্যারান্টি', 'সহজ রিটার্ন']
@@ -365,22 +365,22 @@ export default function Template2({ product }: Template2Props) {
               })}
             </div>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-2 sm:gap-4">
               <button
                 onClick={scrollToOrder}
-                className="bg-[#1a365d] text-white px-8 py-4 rounded-lg hover:bg-blue-800 transition-all duration-250 flex items-center gap-2.5 font-bold cursor-pointer text-sm sm:text-base shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98] border-none"
+                className="bg-blue-600 text-white px-5 py-3 sm:px-8 sm:py-4 rounded-full hover:bg-blue-700 transition-all duration-250 flex items-center gap-2.5 font-bold cursor-pointer text-sm sm:text-base shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98] border-none"
               >
                 <ShoppingCart className="w-5 h-5 flex-shrink-0" /> এখনই অর্ডার করুন
               </button>
               <button
                 onClick={scrollToVideo}
-                className="bg-white border border-slate-200 text-slate-800 px-8 py-4 rounded-lg hover:bg-slate-50 transition-all duration-250 flex items-center gap-2.5 font-bold cursor-pointer text-sm sm:text-base hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98]"
+                className="bg-white border border-slate-300 text-[#1a365d] px-5 py-3 sm:px-8 sm:py-4 rounded-full hover:border-blue-600 transition-all duration-250 flex items-center gap-2.5 font-bold cursor-pointer text-sm sm:text-base hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98]"
               >
                 <Play size={14} className="text-[#1a365d] fill-[#1a365d]" /> ভিডিও দেখুন
               </button>
             </div>
           </div>
-          <div className="relative h-[550px] w-full overflow-hidden rounded-2xl md:rounded-none">
+          <div className="relative h-[300px] sm:h-[400px] lg:h-[550px] w-full overflow-hidden rounded-2xl md:rounded-none">
             <Image
               src={galleryImages[activeColorIndex] || galleryImages[0]}
               fill
@@ -400,8 +400,8 @@ export default function Template2({ product }: Template2Props) {
       </section>
 
       {/* 3. Trust Banner */}
-      <div className="bg-[#1a365d] text-white py-6">
-        <div className="max-w-[1400px] mx-auto px-4 grid grid-cols-2 md:grid-cols-5 gap-4 text-center text-sm">
+      <div className="bg-[#1a365d] text-white py-4 sm:py-6">
+        <div className="max-w-[1400px] mx-auto px-4 grid grid-cols-2 md:grid-cols-5 gap-4 text-center text-xs sm:text-sm">
           <div>সারাদেশে ডেলিভারি <br /><span className="text-xs text-blue-200">২-৩ দিনের মধ্যে</span></div>
           <div>ক্যাশ অন ডেলিভারি <br /><span className="text-xs text-blue-200">পণ্য হাতে পেয়ে টাকা দিন</span></div>
           <div>৭ দিনের রিটার্ন <br /><span className="text-xs text-blue-200">সহজ রিটার্ন সুবিধা</span></div>
@@ -411,10 +411,10 @@ export default function Template2({ product }: Template2Props) {
       </div>
 
       {/* 4. Product Gallery */}
-      <section className="max-w-[1400px] mx-auto px-4 py-12">
-        <h3 className="text-2xl font-bold text-[#1a365d] mb-6 border-b pb-2">প্রোডাক্ট গ্যালারি</h3>
+      <section className="max-w-[1400px] mx-auto px-4 py-6 sm:py-10 lg:py-12">
+        <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#1a365d] mb-4 sm:mb-6 border-b pb-2">প্রোডাক্ট গ্যালারি</h3>
         <div className="flex flex-col md:flex-row gap-4">
-          <div className="w-full md:w-3/4 h-[500px] bg-slate-50 rounded-lg relative overflow-hidden border border-slate-200/80 shadow-md">
+          <div className="w-full md:w-3/4 h-[250px] sm:h-[350px] lg:h-[500px] bg-slate-50 rounded-lg relative overflow-hidden border border-slate-200/80 shadow-md">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeGalleryIndex}
@@ -439,7 +439,7 @@ export default function Template2({ product }: Template2Props) {
                   }
                 }}
                 type="button"
-                className={`relative h-[115px] rounded-lg w-full overflow-hidden border-2 transition-all cursor-pointer ${activeGalleryIndex === idx
+                className={`relative h-[70px] sm:h-[90px] lg:h-[115px] rounded-lg w-full overflow-hidden border-2 transition-all cursor-pointer ${activeGalleryIndex === idx
                   ? 'border-blue-600 scale-[1.01] shadow-sm'
                   : 'border-slate-200 hover:border-slate-350 bg-slate-100'
                   }`}
@@ -452,10 +452,10 @@ export default function Template2({ product }: Template2Props) {
       </section>
 
       {/* 6. Video & Bullet Points */}
-      <section id="product-video" className="max-w-[1400px] mx-auto px-4 py-12 border-t border-slate-100">
-        <div className="grid md:grid-cols-2 gap-10 items-center">
+      <section id="product-video" className="max-w-[1400px] mx-auto px-4 py-6 sm:py-10 lg:py-12 border-t border-slate-100">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-center">
           <div>
-            <h3 className="text-2xl font-bold text-[#1a365d] mb-6 flex items-center gap-2"><Play size={20} className="text-[#1a365d]" /> প্রোডাক্ট ভিডিও দেখুন</h3>
+            <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#1a365d] mb-4 sm:mb-6 flex items-center gap-2"><Play size={20} className="text-[#1a365d]" /> প্রোডাক্ট ভিডিও দেখুন</h3>
             {playVideo ? (
               <iframe
                 src={product.videoUrl || "https://www.youtube.com/embed/dQw4w9WgXcQ"}
@@ -477,7 +477,7 @@ export default function Template2({ product }: Template2Props) {
             )}
           </div>
           <div className="flex flex-col justify-center">
-            <h3 className="text-2xl font-bold text-[#1a365d] mb-6">কেন আমাদের {sanitizeName(product.name) || "প্রোডাক্টটি"} সেরা?</h3>
+            <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#1a365d] mb-4 sm:mb-6">কেন আমাদের {sanitizeName(product.name) || "প্রোডাক্টটি"} সেরা?</h3>
             <ul className="space-y-3 text-gray-700 font-medium">
               <li className="flex items-center gap-3 bg-blue-50/50 border border-blue-100/60 px-4 py-3 rounded-lg"><div className="w-7 h-7 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle2 className="w-4 h-4 text-green-600" /></div> উন্নতমানের কটন ফ্যাব্রিক</li>
               <li className="flex items-center gap-3 bg-blue-50/50 border border-blue-100/60 px-4 py-3 rounded-lg"><div className="w-7 h-7 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle2 className="w-4 h-4 text-green-600" /></div> নিখুঁত এমব্রয়ডারি কাজ</li>
@@ -485,7 +485,7 @@ export default function Template2({ product }: Template2Props) {
               <li className="flex items-center gap-3 bg-blue-50/50 border border-blue-100/60 px-4 py-3 rounded-lg"><div className="w-7 h-7 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle2 className="w-4 h-4 text-green-600" /></div> রঙ ও ফিনিশিং গ্যারান্টি</li>
               <li className="flex items-center gap-3 bg-blue-50/50 border border-blue-100/60 px-4 py-3 rounded-lg"><div className="w-7 h-7 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0"><CheckCircle2 className="w-4 h-4 text-green-600" /></div> দাম, মূল্য ও যেকোনো অনুষ্ঠানের জন্য উপযোগী</li>
             </ul>
-            <div className="mt-8 bg-[#1a365d] text-white p-5 rounded-xl flex items-center gap-4 shadow-md">
+            <div className="mt-5 sm:mt-8 bg-[#1a365d] text-white p-4 sm:p-5 rounded-xl flex items-center gap-4 shadow-md">
               <div className="w-12 h-12 bg-white/15 rounded-full flex items-center justify-center flex-shrink-0"><UsersIcon className="w-6 h-6 text-white" /></div>
               <div>
                 <p className="text-xl font-bold">{product.customerStatsTitle || '১০,০০০+ সন্তুষ্ট গ্রাহক'}</p>
@@ -497,16 +497,16 @@ export default function Template2({ product }: Template2Props) {
       </section>
 
       {/* Customer Reviews Section */}
-      <section className="max-w-[1400px] mx-auto px-4 py-12 border-t border-slate-100">
-        <h3 className="text-2xl font-bold text-[#1a365d] mb-6 border-b pb-2 text-center">আমাদের কাস্টমারদের রিভিউ</h3>
+      <section className="max-w-[1400px] mx-auto px-4 py-6 sm:py-10 lg:py-12 border-t border-slate-100">
+        <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#1a365d] mb-4 sm:mb-6 border-b pb-2 text-center">আমাদের কাস্টমারদের রিভিউ</h3>
 
         {/* Tabs */}
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-5 sm:mb-8">
           <div className="inline-flex bg-white rounded-lg border border-gray-200 p-1">
             <button
               onClick={() => setReviewType('text')}
               type="button"
-              className={`px-8 py-2 rounded-md font-bold text-sm flex items-center gap-2 cursor-pointer transition-all duration-250 ${reviewType === 'text'
+              className={`px-4 sm:px-8 py-2 rounded-md font-bold text-sm flex items-center gap-2 cursor-pointer transition-all duration-250 ${reviewType === 'text'
                 ? 'bg-white border border-[#1a365d] text-[#1a365d] shadow-sm'
                 : 'text-gray-650 hover:bg-gray-50'
                 }`}
@@ -516,7 +516,7 @@ export default function Template2({ product }: Template2Props) {
             <button
               onClick={() => setReviewType('photo')}
               type="button"
-              className={`px-8 py-2 rounded-md font-bold text-sm flex items-center gap-2 cursor-pointer transition-all duration-250 ${reviewType === 'photo'
+              className={`px-4 sm:px-8 py-2 rounded-md font-bold text-sm flex items-center gap-2 cursor-pointer transition-all duration-250 ${reviewType === 'photo'
                 ? 'bg-white border border-[#1a365d] text-[#1a365d] shadow-sm'
                 : 'text-gray-655 hover:bg-gray-50'
                 }`}
@@ -599,13 +599,13 @@ export default function Template2({ product }: Template2Props) {
       </section>
 
       {/* FAQ Accordion & CTA Banner Section */}
-      <section className="max-w-[1400px] mx-auto px-4 mb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+      <section className="max-w-[1400px] mx-auto px-4 mb-6 sm:mb-10 lg:mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-stretch">
 
           {/* Left Column: FAQ Accordion */}
-          <div className="lg:col-span-5 bg-white border border-slate-200/60 rounded-2xl p-6 shadow-xs flex flex-col justify-between">
+          <div className="lg:col-span-5 bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-6 shadow-xs flex flex-col justify-between">
             <div>
-              <h3 className="text-xl font-extrabold text-[#1a365d] mb-6 flex items-center gap-2">
+              <h3 className="text-xl font-extrabold text-[#1a365d] mb-4 sm:mb-6 flex items-center gap-2">
                 <HelpCircle className="w-5 h-5 text-[#1a365d] flex-shrink-0" /> FAQ সেকশন
               </h3>
               <div className="space-y-3.5">
@@ -641,13 +641,13 @@ export default function Template2({ product }: Template2Props) {
           </div>
 
           {/* Right Column: CTA Banner */}
-          <div className="lg:col-span-7 bg-[#1a365d] rounded-2xl relative overflow-hidden flex flex-col md:flex-row shadow-sm min-h-[340px]">
+          <div className="lg:col-span-7 bg-[#1a365d] rounded-2xl relative overflow-hidden flex flex-col md:flex-row shadow-sm min-h-[280px] sm:min-h-[340px]">
             {/* Text Content */}
-            <div className="flex-1 p-8 md:p-10 flex flex-col justify-center text-white z-10">
+            <div className="flex-1 p-5 sm:p-8 md:p-10 flex flex-col justify-center text-white z-10">
               <span className="text-xs sm:text-sm text-blue-200 font-bold tracking-wider mb-2 block uppercase">
                 সেরা কোয়ালিটি ও পারফেক্ট সার্ভিস
               </span>
-              <h2 className="text-2xl sm:text-4xl font-black mb-3 tracking-tight">
+              <h2 className="text-xl sm:text-2xl lg:text-4xl font-black mb-3 tracking-tight">
                 এখনই অর্ডার করুন
               </h2>
               <p className="text-xs sm:text-sm text-blue-100/90 mb-6 font-medium">
@@ -664,7 +664,7 @@ export default function Template2({ product }: Template2Props) {
               {/* Action Button */}
               <a
                 href="#order-form"
-                className="inline-flex items-center justify-center bg-white text-[#1a365d] font-extrabold text-sm px-8 py-3.5 rounded-lg hover:bg-blue-50 transition duration-250 shadow-sm hover:shadow-md cursor-pointer self-start border-none"
+                className="inline-flex items-center justify-center bg-white text-[#1a365d] font-extrabold text-sm px-5 py-3 sm:px-8 sm:py-3.5 rounded-full hover:bg-blue-50 transition duration-250 shadow-sm hover:shadow-md cursor-pointer self-start border-none"
               >
                 <ShoppingBag className="w-5 h-5 flex-shrink-0" /> এখনই অর্ডার করুন
               </a>
@@ -689,17 +689,17 @@ export default function Template2({ product }: Template2Props) {
       {/* 7. Order Form Section */}
       
       {/* 4.5 Call and WhatsApp Section */}
-      <section className="max-w-[1400px] mx-auto px-4 mb-8">
-        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <section className="max-w-[1400px] mx-auto px-4 mb-5 sm:mb-8">
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-4 sm:p-6 lg:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
-            <h3 className="text-xl sm:text-2xl font-black text-slate-800 mb-2">প্রয়োজনে সরাসরি যোগাযোগ করুন</h3>
+            <h3 className="text-lg sm:text-xl lg:text-2xl font-black text-slate-800 mb-2">প্রয়োজনে সরাসরি যোগাযোগ করুন</h3>
             <p className="text-xs sm:text-sm text-slate-550">অর্ডার করতে কোনো সমস্যা হলে বা যেকোনো তথ্যের জন্য সরাসরি কল বা হোয়াটসঅ্যাপ করুন।</p>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-4 w-full md:w-auto">
             {product.storePhone && (
               <a
                 href={`tel:${product.storePhone}`}
-                className="flex items-center justify-center gap-2.5 bg-blue-700 hover:bg-blue-800 text-white font-extrabold text-sm sm:text-base px-6 py-3.5 rounded-xl transition duration-250 hover:shadow-lg active:scale-98 cursor-pointer w-full sm:w-auto text-center border-none"
+                className="flex items-center justify-center gap-2.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-sm sm:text-base px-4 py-3 sm:px-6 sm:py-3.5 rounded-full transition duration-250 hover:shadow-lg active:scale-98 cursor-pointer w-full sm:w-auto text-center border-none"
               >
                 <Phone className="w-5 h-5 flex-shrink-0 animate-bounce" /> সরাসরি ফোন করুন
               </a>
@@ -709,7 +709,7 @@ export default function Template2({ product }: Template2Props) {
                 href={waLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2.5 bg-[#25d366] hover:bg-[#20ba56] text-white font-extrabold text-sm sm:text-base px-6 py-3.5 rounded-xl transition duration-250 hover:shadow-lg active:scale-98 cursor-pointer w-full sm:w-auto text-center border-none"
+                className="flex items-center justify-center gap-2.5 bg-[#25d366] hover:bg-[#20ba56] text-white font-extrabold text-sm sm:text-base px-4 py-3 sm:px-6 sm:py-3.5 rounded-full transition duration-250 hover:shadow-lg active:scale-98 cursor-pointer w-full sm:w-auto text-center border-none"
               >
                 <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
                   <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.73-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.965C16.528 1.978 14.057.955 11.43.955c-5.448 0-9.876 4.372-9.88 9.802-.002 1.73.456 3.42 1.32 4.947L1.93 21.17l5.44-1.416zM15.753 13.06c-.234-.117-1.38-.68-1.597-.76-.217-.08-.375-.12-.533.12-.158.24-.612.76-.75.918-.139.158-.277.177-.51.06-.233-.118-.987-.363-1.879-1.158-.694-.62-1.162-1.385-1.298-1.62-.136-.234-.015-.36.103-.476.105-.104.233-.272.35-.408.117-.136.156-.227.234-.379.078-.152.039-.285-.019-.402-.059-.117-.533-1.285-.73-1.76-.192-.464-.388-.4-.533-.408-.138-.007-.297-.008-.456-.008-.158 0-.416.06-.634.298-.218.238-.83.812-.83 1.982 0 1.17.85 2.298.969 2.457.118.158 1.67 2.547 4.047 3.57.566.244.1008.39 1.39.497.38.032.74.015 1.012-.03.303-.049.932-.38 1.062-.747.13-.368.13-.683.09-.747-.038-.063-.156-.101-.39-.219z" />
@@ -721,52 +721,52 @@ export default function Template2({ product }: Template2Props) {
         </div>
       </section>
 
-      <section id="order-form" className="max-w-[1400px] mx-auto px-4 py-12 scroll-mt-6 border-t border-slate-100">
-        <h3 className="text-2xl font-bold text-[#1a365d] mb-6 border-b pb-2 text-center">অর্ডার করতে নিচের ফর্মটি পূরণ করুন</h3>
-        <div className="grid lg:grid-cols-3 gap-8">
+      <section id="order-form" className="max-w-[1400px] mx-auto px-4 py-6 sm:py-10 lg:py-12 scroll-mt-6 border-t border-slate-100">
+        <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-[#1a365d] mb-4 sm:mb-6 border-b pb-2 text-center">অর্ডার করতে নিচের ফর্মটি পূরণ করুন</h3>
+        <div className="grid lg:grid-cols-3 gap-5 sm:gap-8">
 
           {/* Form */}
-          <div className="lg:col-span-2 bg-white p-8 rounded-lg shadow-sm border border-gray-100">
-            <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">আপনার নাম <span className="text-red-500">*</span></label>
+          <div className="lg:col-span-2 bg-white p-4 sm:p-6 lg:p-8 rounded-lg shadow-sm border border-gray-100">
+            <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-4 sm:gap-6">
+              <div className="space-y-1.5 sm:space-y-2">
+                <label className="text-xs sm:text-sm font-semibold text-gray-700">আপনার নাম <span className="text-red-500">*</span></label>
                 <input
                   type="text"
                   placeholder="আপনার নাম লিখুন"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full border border-slate-200/85 p-3 rounded-lg focus:outline-none focus:border-slate-400 focus:ring-0 text-sm transition-all duration-200 shadow-xs bg-white"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[#1a365d] placeholder:text-slate-400 outline-none focus:border-blue-600 transition-colors focus:bg-white"
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-sm font-semibold text-gray-700">মোবাইল নম্বর <span className="text-red-500">*</span></label>
+              <div className="space-y-1.5 sm:space-y-2">
+                <label className="text-xs sm:text-sm font-semibold text-gray-700">মোবাইল নম্বর <span className="text-red-500">*</span></label>
                 <input
                   type="text"
                   placeholder="01XXXXXXXXX"
                   required
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full border border-slate-200/85 p-3 rounded-lg focus:outline-none focus:border-slate-400 focus:ring-0 text-sm transition-all duration-200 shadow-xs bg-white"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[#1a365d] placeholder:text-slate-400 outline-none focus:border-blue-600 transition-colors focus:bg-white"
                 />
               </div>
-              <div className="space-y-2 md:col-span-2">
-                <label className="text-sm font-semibold text-gray-700">ঠিকানা <span className="text-red-500">*</span></label>
+              <div className="space-y-1.5 sm:space-y-2 md:col-span-2">
+                <label className="text-xs sm:text-sm font-semibold text-gray-700">ঠিকানা <span className="text-red-500">*</span></label>
                 <input
                   type="text"
                   placeholder="আপনার সম্পূর্ণ ঠিকানা লিখুন"
                   required
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                  className="w-full border border-slate-200/85 p-3 rounded-lg focus:outline-none focus:border-slate-400 focus:ring-0 text-sm transition-all duration-200 shadow-xs bg-white"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[#1a365d] placeholder:text-slate-400 outline-none focus:border-blue-600 transition-colors focus:bg-white"
                 />
               </div>
-              <div className="space-y-2 md:col-span-2">
-                <label className="text-sm font-semibold text-gray-700">ডেলিভারি এলাকা <span className="text-red-500">*</span></label>
+              <div className="space-y-1.5 sm:space-y-2 md:col-span-2">
+                <label className="text-xs sm:text-sm font-semibold text-gray-700">ডেলিভারি এলাকা <span className="text-red-500">*</span></label>
                 <select
                   value={deliveryArea}
                   onChange={(e) => setDeliveryArea(e.target.value as 'dhaka' | 'outside')}
-                  className="w-full border border-slate-200/85 p-3 rounded-lg focus:outline-none focus:border-slate-400 focus:ring-0 text-sm bg-white transition-all duration-200 shadow-xs"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[#1a365d] outline-none focus:border-blue-600 cursor-pointer focus:bg-white"
                 >
                   <option value="dhaka">ঢাকার ভেতরে (ডেলিভারি চার্জ: ৳{toBanglaNum(deliveryFeeDhaka)} টাকা)</option>
                   <option value="outside">ঢাকার বাইরে (ডেলিভারি চার্জ: ৳{toBanglaNum(deliveryFeeOutside)} টাকা)</option>
@@ -777,12 +777,12 @@ export default function Template2({ product }: Template2Props) {
               </div>
               {/* Selectors and Quantity block on a single row */}
               <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700">সাইজ নির্বাচন করুন <span className="text-red-500">*</span></label>
+                <div className="space-y-1.5 sm:space-y-2">
+                  <label className="text-xs sm:text-sm font-semibold text-gray-700">সাইজ নির্বাচন করুন <span className="text-red-500">*</span></label>
                   <select
                     value={selectedSize}
                     onChange={(e) => setSelectedSize(e.target.value)}
-                    className="w-full border border-slate-200/85 p-3 rounded-lg focus:outline-none focus:border-slate-400 focus:ring-0 text-sm bg-white transition-all duration-200 shadow-xs"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[#1a365d] outline-none focus:border-blue-600 cursor-pointer focus:bg-white"
                   >
                     {sizesList.map((size: string) => {
                       const isOutOfStock = outOfStockList.includes(size.trim().toUpperCase());
@@ -794,8 +794,8 @@ export default function Template2({ product }: Template2Props) {
                     })}
                   </select>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700">কালার নির্বাচন করুন <span className="text-red-500">*</span></label>
+                <div className="space-y-1.5 sm:space-y-2">
+                  <label className="text-xs sm:text-sm font-semibold text-gray-700">কালার নির্বাচন করুন <span className="text-red-500">*</span></label>
                   <select
                     value={selectedColor}
                     onChange={(e) => {
@@ -806,30 +806,30 @@ export default function Template2({ product }: Template2Props) {
                         setActiveGalleryIndex(idx);
                       }
                     }}
-                    className="w-full border border-slate-200/85 p-3 rounded-lg focus:outline-none focus:border-slate-400 focus:ring-0 text-sm bg-white transition-all duration-200 shadow-xs"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[#1a365d] outline-none focus:border-blue-600 cursor-pointer focus:bg-white"
                   >
                     {colorsList.map((color: string) => (
                       <option key={color} value={color}>{color}</option>
                     ))}
                   </select>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700">পরিমাণ (Quantity) <span className="text-red-500">*</span></label>
+                <div className="space-y-1.5 sm:space-y-2">
+                  <label className="text-xs sm:text-sm font-semibold text-gray-700">পরিমাণ (Quantity) <span className="text-red-500">*</span></label>
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
                       onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-                      className="w-11 h-11 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center font-bold text-lg cursor-pointer transition select-none"
+                      className="w-8 h-8 rounded-lg border border-slate-300 text-[#1a365d] flex items-center justify-center hover:border-blue-600 cursor-pointer bg-white transition-colors"
                     >
                       -
                     </button>
-                    <div className="flex-1 h-11 border border-slate-200 rounded-lg flex items-center justify-center font-bold text-sm bg-slate-50/50">
+                    <div className="flex-1 h-8 border border-slate-200 rounded-lg flex items-center justify-center font-bold text-[#1a365d] text-base">
                       {toBanglaNum(quantity)} টি
                     </div>
                     <button
                       type="button"
                       onClick={() => setQuantity((prev) => prev + 1)}
-                      className="w-11 h-11 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center font-bold text-lg cursor-pointer transition select-none"
+                      className="w-8 h-8 rounded-lg border border-slate-300 text-[#1a365d] flex items-center justify-center hover:border-blue-600 cursor-pointer bg-white transition-colors"
                     >
                       +
                     </button>
@@ -841,7 +841,7 @@ export default function Template2({ product }: Template2Props) {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#1a365d] text-white font-bold text-lg py-4 rounded-lg hover:bg-blue-800 transition-all duration-250 flex justify-center items-center gap-2 shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.99] cursor-pointer border-none"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base py-3.5 rounded-full transition-all active:scale-[0.99] cursor-pointer border-none flex items-center justify-center gap-2 shadow-md"
                 >
                   {isSubmitting ? (
                     <span className="flex items-center gap-2 justify-center">
@@ -874,8 +874,8 @@ export default function Template2({ product }: Template2Props) {
           </div>
 
           {/* Order Summary */}
-          <div className="bg-white p-6 rounded-lg border border-gray-100 shadow-sm h-fit">
-            <h4 className="text-lg font-bold text-[#1a365d] mb-6 pb-4 border-b border-gray-100">আপনার অর্ডার</h4>
+          <div className="bg-white p-4 sm:p-6 rounded-lg border border-gray-100 shadow-sm h-fit">
+            <h4 className="text-lg font-bold text-[#1a365d] mb-4 sm:mb-6 pb-3 sm:pb-4 border-b border-gray-100">আপনার অর্ডার</h4>
 
             <div className="flex gap-4 items-center mb-6">
               <div className="w-16 h-20 bg-gray-100 rounded-lg border relative overflow-hidden flex-shrink-0">
@@ -892,9 +892,9 @@ export default function Template2({ product }: Template2Props) {
               <div className="flex justify-between"><span>ডেলিভারি চার্জ</span><span className="font-bold text-gray-855">৳{toBanglaNum(deliveryFee)}</span></div>
             </div>
 
-            <div className="flex justify-between items-center mb-8">
-              <span className="font-bold text-gray-800 text-lg">মোট পরিমান</span>
-              <span className="text-2xl font-bold text-[#1a365d]">৳{toBanglaNum(Math.round(discountedPrice * quantity) + deliveryFee)}</span>
+            <div className="flex justify-between items-center mb-5 sm:mb-8">
+              <span className="font-bold text-gray-800 text-base sm:text-lg">মোট পরিমান</span>
+              <span className="text-xl sm:text-2xl font-bold text-[#1a365d]">৳{toBanglaNum(Math.round(discountedPrice * quantity) + deliveryFee)}</span>
             </div>
 
             <div className="space-y-4 bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm">
@@ -916,47 +916,47 @@ export default function Template2({ product }: Template2Props) {
       </section>
 
       {/* Dedicated Customer Review Submission Section */}
-      <section className="max-w-[1400px] mx-auto px-4 mb-12">
-        <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-sm border border-gray-100">
-          <h3 className="text-xl font-bold text-[#1a365d] mb-2 text-center">আপনার মূল্যবান মতামত দিন</h3>
+      <section className="max-w-[1400px] mx-auto px-4 mb-6 sm:mb-10 lg:mb-12">
+        <div className="max-w-3xl mx-auto bg-white p-4 sm:p-6 lg:p-8 rounded-lg shadow-sm border border-gray-100">
+          <h3 className="text-xl font-bold text-[#1a365d] mb-1.5 sm:mb-2 text-center">আপনার মূল্যবান মতামত দিন</h3>
           <p className="text-xs text-slate-500 text-center mb-6">আমাদের প্রোডাক্ট আপনার কেমন লেগেছে? ছবি ও টেক্সটের মাধ্যমে আমাদের জানান!</p>
 
           <form onSubmit={handleReviewSubmit} className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700">আপনার নাম <span className="text-red-500">*</span></label>
+            <div className="space-y-1.5 sm:space-y-2">
+              <label className="text-xs sm:text-sm font-semibold text-gray-700">আপনার নাম <span className="text-red-500">*</span></label>
               <input
                 type="text"
                 placeholder="আপনার নাম লিখুন"
                 required
                 value={reviewName}
                 onChange={(e) => setReviewName(e.target.value)}
-                className="w-full border border-slate-200/85 p-3 rounded-lg focus:outline-none focus:border-slate-400 focus:ring-0 text-sm transition-all duration-200 shadow-xs bg-white"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[#1a365d] placeholder:text-slate-400 outline-none focus:border-blue-600 transition-colors focus:bg-white"
               />
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700">শহর / অবস্থান</label>
+            <div className="space-y-1.5 sm:space-y-2">
+              <label className="text-xs sm:text-sm font-semibold text-gray-700">শহর / অবস্থান</label>
               <input
                 type="text"
                 placeholder="যেমন: ঢাকা"
                 value={reviewCity}
                 onChange={(e) => setReviewCity(e.target.value)}
-                className="w-full border border-slate-200/85 p-3 rounded-lg focus:outline-none focus:border-slate-400 focus:ring-0 text-sm transition-all duration-200 shadow-xs bg-white"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[#1a365d] placeholder:text-slate-400 outline-none focus:border-blue-600 transition-colors focus:bg-white"
               />
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 flex items-center gap-1">টেক্সট রিভিউ ℹ️</label>
+            <div className="space-y-1.5 sm:space-y-2">
+              <label className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-1">টেক্সট রিভিউ ℹ️</label>
               <textarea
                 rows={2}
                 maxLength={200}
                 placeholder="আপনার মতামত লিখুন..."
                 value={reviewText}
                 onChange={(e) => setReviewText(e.target.value)}
-                className="w-full border border-slate-200/85 p-3 rounded-lg focus:outline-none focus:border-slate-400 focus:ring-0 text-sm transition-all duration-200 shadow-xs bg-white resize-none h-[106px]"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[#1a365d] placeholder:text-slate-400 outline-none focus:border-blue-600 transition-colors focus:bg-white resize-none h-[106px]"
               />
               <p className="text-right text-[10px] text-gray-400 mt-1">{reviewText.length}/200</p>
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 flex items-center gap-1">ছবি রিভিউ (যদি থাকে) ℹ️</label>
+            <div className="space-y-1.5 sm:space-y-2">
+              <label className="text-xs sm:text-sm font-semibold text-gray-700 flex items-center gap-1">ছবি রিভিউ (যদি থাকে) ℹ️</label>
               <div className="w-full border-2 border-dashed border-slate-200 rounded-lg p-5 flex flex-col items-center justify-center text-center bg-slate-50/50 hover:bg-slate-50 hover:border-slate-350 transition-all duration-250 cursor-pointer h-[106px] group shadow-xs">
                 <Upload size={22} className="text-slate-400 group-hover:text-[#1a365d] transition-transform duration-200 group-hover:scale-105 mb-1" />
                 <p className="text-[10px] font-bold text-gray-700">এখানে ক্লিক করে ছবি আপলোড করুন</p>
@@ -967,7 +967,7 @@ export default function Template2({ product }: Template2Props) {
             <div className="md:col-span-2 mt-2">
               <button
                 type="submit"
-                className="w-full bg-[#1a365d] text-white font-bold text-base py-3.5 rounded-lg hover:bg-blue-800 transition-all duration-250 flex justify-center items-center gap-2 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:scale-[0.99] cursor-pointer border-none"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-base py-3.5 rounded-full transition-all active:scale-[0.99] cursor-pointer border-none flex items-center justify-center gap-2 shadow-md"
               >
                 <Edit className="w-4 h-4 flex-shrink-0" /> রিভিউ সাবমিট করুন
               </button>
@@ -989,7 +989,7 @@ export default function Template2({ product }: Template2Props) {
       </section>
 
       {/* 8. Footer CTA & Footer */}
-      <footer className="bg-[#1a365d] text-white mt-12 pt-12 pb-8">
+      <footer className="bg-[#1a365d] text-white mt-6 sm:mt-12 pt-8 sm:pt-12 pb-6 sm:pb-8">
         <div className="max-w-[1400px] mx-auto px-4">
           {/* Top: Brand + Contact + Social */}
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-8">
@@ -997,11 +997,11 @@ export default function Template2({ product }: Template2Props) {
             {/* Brand */}
             <div className="flex-shrink-0">
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-white text-[#1a365d] rounded-full flex items-center justify-center font-bold text-xl select-none">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white text-[#1a365d] rounded-full flex items-center justify-center font-bold text-xl select-none">
                   {(product.storeName || 'আমার স্টোর')[0]}
                 </div>
                 <div>
-                  <h2 className="text-base sm:text-lg font-black tracking-tight leading-tight">{product.storeName || 'আমার স্টোর'}</h2>
+                  <h2 className="text-sm sm:text-base lg:text-lg font-black tracking-tight leading-tight">{product.storeName || 'আমার স্টোর'}</h2>
                   <p className="text-[10px] text-blue-200 font-bold block mt-0.5 leading-none">{product.storeTagline || 'সেরা অনলাইন শপিং অভিজ্ঞতা'}</p>
                 </div>
               </div>
