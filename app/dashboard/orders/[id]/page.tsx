@@ -114,8 +114,8 @@ export default function OrderDetailPage() {
           
           {/* Order Items */}
           <div className="bg-card border border-border/60 rounded-2xl p-6 shadow-xs">
-            <h2 className="text-base font-bold text-[#1a365d] mb-5 flex items-center gap-2">
-              <Package size={18} className="text-[#1a365d]" /> অর্ডার আইটেমসমূহ
+            <h2 className="text-base font-bold text-brand-ink mb-5 flex items-center gap-2">
+              <Package size={18} className="text-brand-ink" /> অর্ডার আইটেমসমূহ
             </h2>
 
             <div className="divide-y divide-border/65">
@@ -128,7 +128,7 @@ export default function OrderDetailPage() {
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold text-sm text-[#1a365d]">৳ {toBanglaNum(item.subtotal)}</p>
+                    <p className="font-bold text-sm text-brand-ink">৳ {toBanglaNum(item.subtotal)}</p>
                     <p className="text-[10px] text-muted-foreground font-bold">
                       প্রতিটি ৳ {toBanglaNum(item.price)}
                     </p>
@@ -140,8 +140,8 @@ export default function OrderDetailPage() {
 
           {/* Shipping Info */}
           <div className="bg-card border border-border/60 rounded-2xl p-6 shadow-xs">
-            <h2 className="text-base font-bold text-[#1a365d] mb-5 flex items-center gap-2">
-              <Truck size={18} className="text-[#1a365d]" /> ডেলিভারি ও পেমেন্ট তথ্য
+            <h2 className="text-base font-bold text-brand-ink mb-5 flex items-center gap-2">
+              <Truck size={18} className="text-brand-ink" /> ডেলিভারি ও পেমেন্ট তথ্য
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -165,8 +165,8 @@ export default function OrderDetailPage() {
           
           {/* Customer Profile */}
           <div className="bg-card border border-border/60 rounded-2xl p-6 shadow-xs">
-            <h2 className="text-base font-bold text-[#1a365d] mb-5 flex items-center gap-2">
-              <User size={18} className="text-[#1a365d]" /> কাস্টমার প্রোফাইল
+            <h2 className="text-base font-bold text-brand-ink mb-5 flex items-center gap-2">
+              <User size={18} className="text-brand-ink" /> কাস্টমার প্রোফাইল
             </h2>
 
             <div className="space-y-4">
@@ -206,8 +206,8 @@ export default function OrderDetailPage() {
 
           {/* Order Summary Billing */}
           <div className="bg-card border border-border/60 rounded-2xl p-6 shadow-xs">
-            <h2 className="text-base font-bold text-[#1a365d] mb-5 flex items-center gap-2">
-              <CreditCard size={18} className="text-[#1a365d]" /> বিলিং সারসংক্ষেপ
+            <h2 className="text-base font-bold text-brand-ink mb-5 flex items-center gap-2">
+              <CreditCard size={18} className="text-brand-ink" /> বিলিং সারসংক্ষেপ
             </h2>
 
             <div className="space-y-3.5 text-sm font-medium">
@@ -223,7 +223,7 @@ export default function OrderDetailPage() {
                 <span>ভ্যাট/ট্যাক্স (Tax)</span>
                 <span className="font-bold text-foreground">৳ {toBanglaNum(order.tax)}</span>
               </div>
-              <div className="pt-4 border-t border-border/80 flex justify-between items-center font-extrabold text-base text-[#1a365d]">
+              <div className="pt-4 border-t border-border/80 flex justify-between items-center font-extrabold text-base text-brand-ink">
                 <span>সর্বমোট (Total)</span>
                 <span>৳ {toBanglaNum(order.total)}</span>
               </div>

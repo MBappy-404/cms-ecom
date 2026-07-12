@@ -10,7 +10,6 @@ import { Badge } from '@/components/ui/badge';
 import { Product } from '@/lib/types';
 import {
   ShoppingCart,
-  Star,
   Truck,
   Shield,
   CheckCircle2,
@@ -20,7 +19,6 @@ import {
   Play,
   RotateCcw,
   Upload,
-  Home,
   Users,
   Edit,
   Mail,
@@ -298,10 +296,10 @@ export default function Template1({ product }: Template1Props) {
     >
       {/* 1. Header Navigation */}
       <header className="bg-[#1a365d]/90 backdrop-blur-md text-white sticky top-0 z-45 shadow-md border-b border-white/5">
-        <div className="max-w-[1250px] mx-auto px-4 py-3 flex justify-between items-center">
+        <div className="max-w-[1400px] mx-auto px-4 py-3 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#1a365d] font-bold text-xl select-none">
-              {(product.storeName || 'আমার স্টোর')[0]}
+            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#1a365d] select-none shadow-sm">
+              <Shirt size={20} className="text-[#1a365d]" />
             </div>
             <div>
               <h1 className="text-base sm:text-lg font-black tracking-tight leading-tight">{product.storeName || 'আমার স্টোর'}</h1>
@@ -309,16 +307,21 @@ export default function Template1({ product }: Template1Props) {
             </div>
           </div>
 
-          <nav className="hidden md:flex items-center gap-8 text-xs font-black text-blue-100">
-            <Link href="/" className="flex items-center gap-1.5 hover:text-white transition">
-              <Home size={14} className="text-blue-200 flex-shrink-0" /> হোম
-            </Link>
-            <Link href="/" className="flex items-center gap-1.5 hover:text-white transition">
-              <Users size={14} className="text-blue-200 flex-shrink-0" /> আমাদের সম্পর্কে
-            </Link>
-            <Link href="/" className="flex items-center gap-1.5 hover:text-white transition">
-              <Star size={14} className="text-yellow-400 fill-yellow-400 flex-shrink-0" /> কাস্টমার রিভিউ
-            </Link>
+          <nav className="hidden lg:flex items-center gap-7 text-xs font-black text-blue-100">
+            {(product.headerPills && product.headerPills.length > 0
+              ? product.headerPills.slice(0, 3)
+              : ['সারাদেশে ডেলিভারি', 'ক্যাশ অন ডেলিভারি', '৭ দিনের রিটার্ন']
+            ).map((pill: string, i: number) => {
+              const PillIcon = [Truck, ShoppingBag, RotateCcw][i % 3];
+              return (
+                <div key={i} className="flex items-center gap-2 whitespace-nowrap">
+                  <span className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
+                    <PillIcon size={14} className="text-blue-200" />
+                  </span>
+                  {pill}
+                </div>
+              );
+            })}
           </nav>
 
           <div className="bg-white text-[#1a365d] pl-3.5 pr-5 py-1.5 rounded-full flex items-center gap-2.5 shadow-md hover:bg-gray-50 transition cursor-pointer">
@@ -332,7 +335,7 @@ export default function Template1({ product }: Template1Props) {
       </header>
 
       {/* 2. Main Product Section */}
-      <main className="max-w-[1250px] mx-auto px-4 py-8">
+      <main className="max-w-[1400px] mx-auto px-4 py-8">
         <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 grid grid-cols-1 md:grid-cols-2 gap-10">
 
           {/* Left: Image Gallery */}
@@ -390,6 +393,23 @@ export default function Template1({ product }: Template1Props) {
               >
                 ❯
               </button>
+              {/* Social-proof badge overlaid on product image (matches design) */}
+              <div className="absolute bottom-4 left-4 z-10 flex items-center gap-2 bg-[#1a365d] text-white pl-2 pr-3.5 py-1.5 rounded-full shadow-lg">
+                <div className="flex -space-x-2">
+                  {[0, 1, 2, 3].map((i) => (
+                    <span
+                      key={i}
+                      className="w-6 h-6 rounded-full border-2 border-[#1a365d] bg-gradient-to-tr from-blue-400 to-indigo-500 flex items-center justify-center text-[8px] font-black"
+                    >
+                      {['A', 'R', 'S', 'T'][i]}
+                    </span>
+                  ))}
+                </div>
+                <div className="leading-none">
+                  <p className="text-[11px] font-black leading-none">{product.customerStatsTitle || '১০,০০০+'}</p>
+                  <p className="text-[8px] text-blue-200 font-bold leading-none mt-0.5">সন্তুষ্ট গ্রাহক</p>
+                </div>
+              </div>
             </div>
             {/* Thumbnails */}
             <div className="grid grid-cols-5 gap-2">
@@ -416,8 +436,8 @@ export default function Template1({ product }: Template1Props) {
 
           {/* Right: Product Details */}
           <div className="flex flex-col justify-center">
-            <span className="text-blue-600 text-xs font-bold border border-blue-200 bg-blue-50 px-3 py-1 rounded-lg w-max mb-4">
-              এক্সক্লুসিভ কালেকশন
+            <span className="text-blue-600 text-xs font-bold border border-blue-200 bg-blue-50 px-3 py-1 rounded-full w-max mb-4">
+              {product.heroEyebrow || 'নতুন ডিজাইন'}
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-gray-900 mb-4 leading-tight">
               {product.heroTitle ? sanitizeName(product.heroTitle) : sanitizeName(product.name)}
@@ -435,8 +455,8 @@ export default function Template1({ product }: Template1Props) {
             </p>
 
             <div className="flex items-end gap-3 mb-6">
-              <span className="text-2xl sm:text-3xl font-black text-blue-700">৳{toBanglaNum(Math.round(discountedPrice * 110))}</span>
-              <span className="text-sm text-gray-400 line-through mb-1">৳{toBanglaNum(Math.round(product.price * 110))}</span>
+              <span className="text-2xl sm:text-3xl font-black text-blue-700">৳{toBanglaNum(Math.round(discountedPrice))}</span>
+              <span className="text-sm text-gray-400 line-through mb-1">৳{toBanglaNum(Math.round(product.price))}</span>
               <span className="bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded-lg mb-2">
                 {toBanglaNum(product.discount)}% ছাড়
               </span>
@@ -536,7 +556,7 @@ export default function Template1({ product }: Template1Props) {
                 type="button"
                 className="flex-1 bg-blue-700 text-white py-3.5 rounded-lg font-bold hover:bg-blue-800 transition-all duration-250 flex items-center justify-center gap-2 shadow-md hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98] cursor-pointer border-none"
               >
-                <ShoppingCart className="w-5 h-5 flex-shrink-0" /> অর্ডার করুন
+                <ShoppingCart className="w-5 h-5 flex-shrink-0" /> এখনই অর্ডার করুন
               </button>
               <button
                 onClick={scrollToVideo}
@@ -551,15 +571,15 @@ export default function Template1({ product }: Template1Props) {
       </main>
 
       {/* 3. Trust Badges Section */}
-      <section className="max-w-[1250px] mx-auto px-4 mb-12">
+      <section className="max-w-[1400px] mx-auto px-4 mb-12">
         <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6 grid grid-cols-2 md:grid-cols-4 gap-6">
           <div className="flex items-center gap-4">
             <Truck className="w-8 h-8 text-blue-600 flex-shrink-0" />
-            <div><p className="font-bold text-sm text-gray-800">সারা বাংলাদেশ ডেলিভারি</p><p className="text-xs text-gray-500">১-৩ দিনের মধ্যে</p></div>
+            <div><p className="font-bold text-sm text-gray-800">সারাদেশে ডেলিভারি</p><p className="text-xs text-gray-500">১-৩ দিনের মধ্যে</p></div>
           </div>
           <div className="flex items-center gap-4">
             <Shield className="w-8 h-8 text-blue-600 flex-shrink-0" />
-            <div><p className="font-bold text-sm text-gray-800">পেমেন্ট সিকিউরিটি</p><p className="text-xs text-gray-500">সুরক্ষিত পেমেন্ট গ্যারান্টি</p></div>
+            <div><p className="font-bold text-sm text-gray-800">ক্যাশ অন ডেলিভারি</p><p className="text-xs text-gray-500">পণ্য হাতে পেয়ে টাকা দিন</p></div>
           </div>
           <div className="flex items-center gap-4">
             <RotateCcw className="w-8 h-8 text-blue-600 flex-shrink-0" />
@@ -574,7 +594,7 @@ export default function Template1({ product }: Template1Props) {
 
       {/* Template 1 Video & Bullet Points */}
       {(product.showVideo !== false || product.showFeatures !== false) && (
-        <section id="product-video" className="max-w-[1250px] mx-auto px-4 mb-12 scroll-mt-24">
+        <section id="product-video" className="max-w-[1400px] mx-auto px-4 mb-12 scroll-mt-24">
           <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-8">
             <div className="grid md:grid-cols-2 gap-10 items-center">
               {/* Left Column: Video */}
@@ -649,7 +669,7 @@ export default function Template1({ product }: Template1Props) {
       )}
 
       {/* 4. Customer Reviews Section */}
-      <section className="max-w-[1250px] mx-auto px-4 mb-12">
+      <section className="max-w-[1400px] mx-auto px-4 mb-12">
         <h3 className="text-2xl font-bold text-center text-gray-900 mb-6">আমাদের কাস্টমারদের রিভিউ</h3>
 
         {/* Tabs */}
@@ -690,7 +710,7 @@ export default function Template1({ product }: Template1Props) {
               className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 relative"
             >
               {textReviews.slice(0, 3).map((review, idx) => (
-                <div key={idx} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition duration-200">
+                <div key={idx} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-out">
                   <div className="flex gap-3 mb-4">
                     <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center font-bold text-gray-500 overflow-hidden relative">
                       {review.avatar ? (
@@ -728,7 +748,7 @@ export default function Template1({ product }: Template1Props) {
                 { name: 'ইশতিয়াক আহমেদ', message: 'ব্যবহার করতে খুব আরামদায়ক ও নিখুঁত ফিনিশিং।', img: photoReviews[2] },
                 { name: 'সায়েম চৌধুরী', message: 'অর্ডার করার ৩ দিনের মধ্যেই ডেলিভারি পেয়ে গেলাম। ধন্যবাদ।', img: photoReviews[3] },
               ].map((item, idx) => (
-                <div key={idx} className="bg-white p-3 rounded-lg shadow-xs border border-gray-100 hover:shadow-md transition duration-200">
+                <div key={idx} className="bg-white p-3 rounded-lg shadow-xs border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-out">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-6 h-6 bg-[#1a365d] rounded-full flex items-center justify-center text-[10px] text-white font-bold select-none">
                       {item.name[0]}
@@ -751,7 +771,7 @@ export default function Template1({ product }: Template1Props) {
       </section>
 
       {/* FAQ Accordion & CTA Banner Section for Template 1 */}
-      <section className="max-w-[1250px] mx-auto px-4 mb-12">
+      <section className="max-w-[1400px] mx-auto px-4 mb-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
 
           {/* Left Column: FAQ Accordion */}
@@ -841,7 +861,7 @@ export default function Template1({ product }: Template1Props) {
       {/* 5. Order Form Section */}
       
       {/* 4.5 Call and WhatsApp Section */}
-      <section className="max-w-[1250px] mx-auto px-4 mb-8">
+      <section className="max-w-[1400px] mx-auto px-4 mb-8">
         <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
             <h3 className="text-xl sm:text-2xl font-black text-slate-800 mb-2">প্রয়োজনে সরাসরি যোগাযোগ করুন</h3>
@@ -873,7 +893,7 @@ export default function Template1({ product }: Template1Props) {
         </div>
       </section>
 
-      <section id="order-form" className="max-w-[1250px] mx-auto px-4 py-8 mb-12 scroll-mt-6">
+      <section id="order-form" className="max-w-[1400px] mx-auto px-4 py-8 mb-12 scroll-mt-6">
         <div className="grid lg:grid-cols-3 gap-8">
 
           {/* Form */}
@@ -1040,13 +1060,13 @@ export default function Template1({ product }: Template1Props) {
             </div>
 
             <div className="space-y-3 text-sm text-gray-655 mb-6 border-b border-gray-100 pb-6">
-              <div className="flex justify-between"><span>প্রাইস</span><span className="font-bold text-gray-850">৳{toBanglaNum(Math.round(discountedPrice * quantity * 110))}</span></div>
+              <div className="flex justify-between"><span>প্রাইস</span><span className="font-bold text-gray-850">৳{toBanglaNum(Math.round(discountedPrice * quantity))}</span></div>
               <div className="flex justify-between"><span>ডেলিভারি চার্জ</span><span className="font-bold text-gray-855">৳{toBanglaNum(deliveryFee)}</span></div>
             </div>
 
             <div className="flex justify-between items-center mb-8">
               <span className="font-bold text-gray-800 text-lg">মোট পরিমান</span>
-              <span className="text-2xl font-bold text-[#1a365d]">৳{toBanglaNum(Math.round(discountedPrice * quantity * 110) + deliveryFee)}</span>
+              <span className="text-2xl font-bold text-[#1a365d]">৳{toBanglaNum(Math.round(discountedPrice * quantity) + deliveryFee)}</span>
             </div>
 
             <div className="space-y-4 bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm">
@@ -1068,7 +1088,7 @@ export default function Template1({ product }: Template1Props) {
       </section>
 
       {/* Dedicated Customer Review Submission Section for Template 1 */}
-      <section className="max-w-[1250px] mx-auto px-4 mb-12">
+      <section className="max-w-[1400px] mx-auto px-4 mb-12">
         <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-sm border border-gray-100">
           <h3 className="text-xl font-bold text-slate-800 mb-2 text-center">আপনার মূল্যবান মতামত দিন</h3>
           <p className="text-xs text-slate-500 text-center mb-6">আমাদের পাঞ্জাবি আপনার কেমন লেগেছে? ছবি ও টেক্সটের মাধ্যমে আমাদের জানান!</p>
@@ -1142,7 +1162,7 @@ export default function Template1({ product }: Template1Props) {
 
       {/* 6. Footer */}
       <footer className="bg-[#1a365d] text-white pt-12 pb-8">
-        <div className="max-w-[1250px] mx-auto px-4">
+        <div className="max-w-[1400px] mx-auto px-4">
           {/* Top: Brand + Contact + Social */}
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-8">
             

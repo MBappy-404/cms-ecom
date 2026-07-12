@@ -23,8 +23,12 @@ export default function HomePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-background">
+        <div className="relative">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-600 animate-pulse" />
+          <Loader2 className="absolute inset-0 m-auto w-6 h-6 animate-spin text-white" />
+        </div>
+        <p className="text-xs font-semibold text-muted-foreground animate-pulse">লোড হচ্ছে...</p>
       </div>
     );
   }

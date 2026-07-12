@@ -33,6 +33,12 @@ const statusLabels: Record<string, string> = {
   cancelled: 'বাতিলকৃত',
 };
 
+// Translate English digits to Bengali for consistent numeric display
+function toBanglaNum(num: number | string): string {
+  const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+  return String(num).replace(/[0-9]/g, (d) => banglaDigits[parseInt(d)]);
+}
+
 export default function OrdersTable({ orders, onUpdate, onDelete }: OrdersTableProps) {
   const [sortBy, setSortBy] = useState<'date' | 'amount' | 'status'>('date');
 
@@ -101,7 +107,7 @@ export default function OrdersTable({ orders, onUpdate, onDelete }: OrdersTableP
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.02 }}
-                className="border-b border-border hover:bg-muted/20 transition-colors"
+                className="border-b border-border hover:bg-muted/40 transition-colors duration-200"
               >
                 <td className="px-6 py-4">
                   <Link href={`/dashboard/orders/${order.id}`} className="font-semibold text-sm text-primary hover:underline">
@@ -115,10 +121,10 @@ export default function OrdersTable({ orders, onUpdate, onDelete }: OrdersTableP
                   </div>
                 </td>
                 <td className="px-6 py-4 text-sm text-foreground">
-                  {order.products.length}টি প্রোডাক্ট
+                  {toBanglaNum(order.products.length)}টি প্রোডাক্ট
                 </td>
                 <td className="px-6 py-4">
-                  <p className="font-semibold text-sm text-foreground">৳{order.total}</p>
+                  <p className="font-semibold text-sm text-foreground">৳{toBanglaNum(order.total)}</p>
                 </td>
                 <td className="px-6 py-4">
                   <span className={cn("inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[10px] font-bold shadow-xs", statusColors[order.status])}>
@@ -134,7 +140,7 @@ export default function OrdersTable({ orders, onUpdate, onDelete }: OrdersTableP
                   </span>
                 </td>
                 <td className="px-6 py-4 text-sm text-muted-foreground">
-                  {order.createdAt.toLocaleDateString()}
+                  {toBanglaNum(order.createdAt.toLocaleDateString())}
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-2.5">

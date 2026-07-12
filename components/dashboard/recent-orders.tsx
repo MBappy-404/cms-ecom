@@ -33,10 +33,10 @@ export default function RecentOrders() {
   const recent = orders.slice(0, 5);
 
   return (
-    <div className="premium-card bg-card border border-border/60 rounded-2xl p-6 shadow-3xs space-y-5">
+    <div className="surface bg-card border border-border/60 rounded-2xl p-6 space-y-5">
       <div className="flex justify-between items-center">
         <div>
-          <h3 className="font-extrabold text-base text-[#1a365d] mb-1">সাম্প্রতিক অর্ডারসমূহ (Recent Orders)</h3>
+          <h3 className="font-extrabold text-base text-brand-ink mb-1">সাম্প্রতিক অর্ডারসমূহ (Recent Orders)</h3>
           <p className="text-[10px] text-muted-foreground font-semibold">সদ্য আসা ৫টি অর্ডারের বিবরণ</p>
         </div>
         <Link href="/dashboard/orders" className="text-xs font-bold text-indigo-600 hover:underline">
@@ -56,7 +56,7 @@ export default function RecentOrders() {
           </thead>
           <tbody className="divide-y divide-border/40 text-xs">
             {recent.map((order) => (
-              <tr key={order.id} className="hover:bg-muted/10 transition-colors">
+              <tr key={order.id} className="group hover:bg-muted/40 transition-colors duration-200">
                 <td className="py-3.5 font-bold text-primary">
                   <Link href={`/dashboard/orders/${order.id}`}>
                     {order.id}

@@ -19,7 +19,7 @@ export default function DashboardHome() {
     >
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-foreground">ড্যাশবোর্ড</h1>
+        <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">ড্যাশবোর্ড</h1>
         <p className="text-muted-foreground mt-1.5 text-xs font-semibold">স্বাগতম! এখানে আপনার অনলাইন ব্যবসার সংক্ষিপ্ত বিবরণ রয়েছে।</p>
       </div>
 
@@ -31,6 +31,7 @@ export default function DashboardHome() {
           icon={ShoppingCart}
           trend={12}
           color="blue"
+          index={0}
         />
         <StatCard
           title="মোট বিক্রি"
@@ -38,6 +39,7 @@ export default function DashboardHome() {
           icon={TrendingUp}
           trend={8}
           color="green"
+          index={1}
         />
         <StatCard
           title="মোট প্রোডাক্ট"
@@ -45,6 +47,7 @@ export default function DashboardHome() {
           icon={Package}
           trend={5}
           color="purple"
+          index={2}
         />
         <StatCard
           title="মোট কাস্টমার"
@@ -52,6 +55,7 @@ export default function DashboardHome() {
           icon={Users}
           trend={15}
           color="orange"
+          index={3}
         />
       </div>
 

@@ -70,6 +70,14 @@ const compressImage = (base64Str: string, maxWidth = 800, maxHeight = 800, quali
   });
 };
 
+const parsePipe = (text: string, keys: string[]): Record<string, string>[] =>
+  text.split('\n').map((l) => l.trim()).filter(Boolean).map((line) => {
+    const parts = line.split('|').map((x) => x.trim());
+    const o: Record<string, string> = {};
+    keys.forEach((k, i) => { o[k] = parts[i] || ''; });
+    return o;
+  }).filter((o) => o[keys[0]]);
+
 export default function WebsiteContentPage() {
   const { products, updateProduct } = useProducts();
   const [product, setProduct] = useState<any>(null);
@@ -118,13 +126,31 @@ export default function WebsiteContentPage() {
 
   const [faqs, setFaqs] = useState<Array<{ q: string; a: string }>>([]);
 
+  // Template-3 (PureSip-style) extra content — all dashboard-editable
+  const [extra, setExtra] = useState({
+    specsText: 'ডাইমেনশন (আকার) | ২৫.৫ x ৭.৫ সেমি\nউপাদান | স্টেইনলেস স্টিল (BPA Free)\nওজন | ৩২০ গ্রাম\nব্যাটারি | ৭০০mAh (৭ দিন পর্যন্ত)\nকানেক্টিভিটি | স্মার্ট LED ইন্ডিকেটর\nপ্যাকেজে যা থাকছে | বোতল, USB কেবল, ম্যানুয়াল',
+    reviewsText: 'রাকিব হাসান | ভেরিফায়েড বায়ার | পানি অনেকক্ষণ ঠান্ডা থাকে। ডিজাইনও প্রিমিয়াম। | 5 | \nসুমাইয়া জান্নাত | ভেরিফায়েড বায়ার | ব্যাটারি ব্যাকআপে আমি খুব সন্তুষ্ট। | 5 | \nতানভীর আহমেদ | ভেরিফায়েড বায়ার | LED ইন্ডিকেটর খুবই উপকারী। | 5 | ',
+    statsText: '৬০K+ | সন্তুষ্ট গ্রাহক\n৪.৯/৫ | গড় রেটিং\n৯৮% | সন্তুষ্টি হার\n১২০+ | দেশে ব্যবহার হচ্ছে',
+    navText: 'বৈশিষ্ট্য | features\nরিভিউ | reviews\nস্পেসিফিকেশন | specs\nপ্রশ্নোত্তর | faq',
+    ratingAverage: '৪.৯',
+    ratingCount: '১,২৪৮',
+    ratingBarsText: '92,6,2,0,0',
+    paymentMethodsText: 'visa,mastercard,bkash,nagad,rocket',
+    offerTitle: 'সীমিত সময়ের অফার!',
+    offerEndsAt: '',
+    showSpecs: true,
+    showStats: true,
+    showOffer: true,
+    showCart: true,
+  });
+
   // Sync state with product data
   useEffect(() => {
     if (products.length > 0 && !product) {
       const activeProduct = products[0];
       setProduct(activeProduct);
       const loadedTemplate = activeProduct.templateId || 1;
-      setActiveTemplate(loadedTemplate === 3 ? 2 : loadedTemplate);
+      setActiveTemplate(loadedTemplate);
       setFormData({
         name: activeProduct.name || '',
         price: activeProduct.price ? String(activeProduct.price) : '',
@@ -171,6 +197,22 @@ export default function WebsiteContentPage() {
           a: 'ঢাকার ভেতরে ডেলিভারি চার্জ ৬০ টাকা এবং ঢাকার বাইরে ৮০ টাকা। ঢাকার ভেতরে আমরা ২৪-৪৮ ঘণ্টায় এবং ঢাকার বাইরে ২-৩ দিনের মধ্যে ডেলিভারি দিয়ে থাকি।'
         }
       ]);
+      setExtra({
+        specsText: activeProduct.specs && activeProduct.specs.length > 0 ? activeProduct.specs.map((sp) => `${sp.label} | ${sp.value}`).join('\n') : 'ডাইমেনশন (আকার) | ২৫.৫ x ৭.৫ সেমি\nউপাদান | স্টেইনলেস স্টিল (BPA Free)\nওজন | ৩২০ গ্রাম\nব্যাটারি | ৭০০mAh (৭ দিন পর্যন্ত)\nকানেক্টিভিটি | স্মার্ট LED ইন্ডিকেটর\nপ্যাকেজে যা থাকছে | বোতল, USB কেবল, ম্যানুয়াল',
+        reviewsText: activeProduct.productReviews && activeProduct.productReviews.length > 0 ? activeProduct.productReviews.map((r) => `${r.name} | ${r.city} | ${r.text} | ${r.rating || 5} | ${r.image || ''}`).join('\n') : 'রাকিব হাসান | ভেরিফায়েড বায়ার | পানি অনেকক্ষণ ঠান্ডা থাকে। ডিজাইনও প্রিমিয়াম। | 5 | \nসুমাইয়া জান্নাত | ভেরিফায়েড বায়ার | ব্যাটারি ব্যাকআপে আমি খুব সন্তুষ্ট। | 5 | \nতানভীর আহমেদ | ভেরিফায়েড বায়ার | LED ইন্ডিকেটর খুবই উপকারী। | 5 | ',
+        statsText: activeProduct.stats && activeProduct.stats.length > 0 ? activeProduct.stats.map((st) => `${st.value} | ${st.label}`).join('\n') : '৬০K+ | সন্তুষ্ট গ্রাহক\n৪.৯/৫ | গড় রেটিং\n৯৮% | সন্তুষ্টি হার\n১২০+ | দেশে ব্যবহার হচ্ছে',
+        navText: activeProduct.navLinks && activeProduct.navLinks.length > 0 ? activeProduct.navLinks.map((n) => `${n.label} | ${n.anchor}`).join('\n') : 'বৈশিষ্ট্য | features\nরিভিউ | reviews\nস্পেসিফিকেশন | specs\nপ্রশ্নোত্তর | faq',
+        ratingAverage: activeProduct.ratingAverage || '৪.৯',
+        ratingCount: activeProduct.ratingCount || '১,২৪৮',
+        ratingBarsText: activeProduct.ratingBars && activeProduct.ratingBars.length > 0 ? activeProduct.ratingBars.join(',') : '92,6,2,0,0',
+        paymentMethodsText: activeProduct.paymentMethods && activeProduct.paymentMethods.length > 0 ? activeProduct.paymentMethods.join(',') : 'visa,mastercard,bkash,nagad,rocket',
+        offerTitle: activeProduct.offerTitle || 'সীমিত সময়ের অফার!',
+        offerEndsAt: activeProduct.offerEndsAt || '',
+        showSpecs: activeProduct.showSpecs !== undefined ? activeProduct.showSpecs : true,
+        showStats: activeProduct.showStats !== undefined ? activeProduct.showStats : true,
+        showOffer: activeProduct.showOffer !== undefined ? activeProduct.showOffer : true,
+        showCart: activeProduct.showCart !== undefined ? activeProduct.showCart : true,
+      });
     }
   }, [products, product]);
 
@@ -326,7 +368,21 @@ export default function WebsiteContentPage() {
         showBadges: formData.showBadges,
         facebookUrl: formData.facebookUrl,
         instagramUrl: formData.instagramUrl,
-        youtubeUrl: formData.youtubeUrl
+        youtubeUrl: formData.youtubeUrl,
+        specs: parsePipe(extra.specsText, ['label', 'value']).map((o) => ({ label: o.label, value: o.value })),
+        productReviews: parsePipe(extra.reviewsText, ['name', 'city', 'text', 'rating', 'image']).map((r: Record<string, string>) => ({ name: r.name, city: r.city, text: r.text, rating: Number(r.rating) || 5, image: r.image || '' })),
+        stats: parsePipe(extra.statsText, ['value', 'label']).map((o) => ({ value: o.value, label: o.label })),
+        navLinks: parsePipe(extra.navText, ['label', 'anchor']).map((o) => ({ label: o.label, anchor: o.anchor })),
+        ratingAverage: extra.ratingAverage,
+        ratingCount: extra.ratingCount,
+        ratingBars: extra.ratingBarsText.split(',').map((n) => Number(n.trim()) || 0).slice(0, 5),
+        paymentMethods: extra.paymentMethodsText.split(',').map((x) => x.trim().toLowerCase()).filter(Boolean),
+        offerTitle: extra.offerTitle,
+        offerEndsAt: extra.offerEndsAt,
+        showSpecs: extra.showSpecs,
+        showStats: extra.showStats,
+        showOffer: extra.showOffer,
+        showCart: extra.showCart
       });
 
       setFormData((prev) => ({
@@ -424,6 +480,19 @@ export default function WebsiteContentPage() {
               <Layers size={14} />
               টেমপ্লেট ২ (মডার্ন ডাইনামিক লেআউট)
             </button>
+            <button
+              type="button"
+              onClick={() => setActiveTemplate(3)}
+              className={cn(
+                "flex-1 sm:flex-none flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs transition-all duration-300 cursor-pointer border border-transparent select-none",
+                activeTemplate === 3
+                  ? "bg-[#c6a15b] text-[#14110f] shadow-lg shadow-[#c6a15b]/25"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              )}
+            >
+              <Sparkles size={14} />
+              টেমপ্লেট ৩ (লাক্সারি বুটিক)
+            </button>
           </div>
         </div>
 
@@ -435,7 +504,7 @@ export default function WebsiteContentPage() {
               size={18}
             />
             <h2>
-              সম্পাদনা করুন: {activeTemplate === 1 ? 'টেমপ্লেট ১ এর কন্টেন্ট' : 'টেমপ্লেট ২ এর কন্টেন্ট'}
+              সম্পাদনা করুন: {activeTemplate === 1 ? 'টেমপ্লেট ১ এর কন্টেন্ট' : activeTemplate === 2 ? 'টেমপ্লেট ২ এর কন্টেন্ট' : 'টেমপ্লেট ৩ এর কন্টেন্ট'}
             </h2>
           </div>
 
@@ -1111,6 +1180,181 @@ export default function WebsiteContentPage() {
                   </p>
                 </div>
               </div>
+
+              {/* Template 3 Luxury Boutique settings */}
+              {activeTemplate === 3 && (
+                <div className="premium-card bg-card p-6 rounded-2xl space-y-6 border border-[#c6a15b]/25 shadow-lg shadow-[#c6a15b]/5">
+                  <h3 className="font-bold text-sm border-b border-border/40 pb-2 flex items-center gap-2 text-[#c6a15b] dark:text-[#c6a15b]">
+                    <Sparkles size={16} /> ৯. টেমপ্লেট ৩ (লাক্সারি বুটিক) বিশেষ সেটিংস
+                  </h3>
+                  
+                  <div className="space-y-6">
+                    {/* Show/Hide switches */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-muted/30 p-4 rounded-xl border border-border/40">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          id="showSpecs"
+                          checked={extra.showSpecs}
+                          onChange={(e) => setExtra({ ...extra, showSpecs: e.target.checked })}
+                          className="w-3.5 h-3.5 rounded border-border text-[#c6a15b] focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                        />
+                        <Label htmlFor="showSpecs" className="text-[11px] font-bold text-muted-foreground cursor-pointer select-none">
+                          স্পেসিফিকেশন
+                        </Label>
+                      </div>
+                      
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          id="showStats"
+                          checked={extra.showStats}
+                          onChange={(e) => setExtra({ ...extra, showStats: e.target.checked })}
+                          className="w-3.5 h-3.5 rounded border-border text-[#c6a15b] focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                        />
+                        <Label htmlFor="showStats" className="text-[11px] font-bold text-muted-foreground cursor-pointer select-none">
+                          পরিসংখ্যান
+                        </Label>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          id="showOffer"
+                          checked={extra.showOffer}
+                          onChange={(e) => setExtra({ ...extra, showOffer: e.target.checked })}
+                          className="w-3.5 h-3.5 rounded border-border text-[#c6a15b] focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                        />
+                        <Label htmlFor="showOffer" className="text-[11px] font-bold text-muted-foreground cursor-pointer select-none">
+                          অফার কাউন্টডাউন
+                        </Label>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          id="showCart"
+                          checked={extra.showCart}
+                          onChange={(e) => setExtra({ ...extra, showCart: e.target.checked })}
+                          className="w-3.5 h-3.5 rounded border-border text-[#c6a15b] focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                        />
+                        <Label htmlFor="showCart" className="text-[11px] font-bold text-muted-foreground cursor-pointer select-none">
+                          কার্ট/অর্ডার বাটন
+                        </Label>
+                      </div>
+                    </div>
+
+                    {/* Ratings */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-semibold text-foreground">গড় রেটিং (যেমন: ৪.৯)</Label>
+                        <Input
+                          type="text"
+                          value={extra.ratingAverage}
+                          onChange={(e) => setExtra({ ...extra, ratingAverage: e.target.value })}
+                          className="bg-background focus-visible:border-[#c6a15b]"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-semibold text-foreground">রিভিউ সংখ্যা (যেমন: ১,২৪৮)</Label>
+                        <Input
+                          type="text"
+                          value={extra.ratingCount}
+                          onChange={(e) => setExtra({ ...extra, ratingCount: e.target.value })}
+                          className="bg-background focus-visible:border-[#c6a15b]"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-semibold text-foreground">রেটিং বার (৫টি কমা-বিভক্ত %, উদা: 92,6,2,0,0)</Label>
+                        <Input
+                          type="text"
+                          value={extra.ratingBarsText}
+                          onChange={(e) => setExtra({ ...extra, ratingBarsText: e.target.value })}
+                          className="bg-background focus-visible:border-[#c6a15b]"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Offer details */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-semibold text-foreground">অফার শিরোনাম</Label>
+                        <Input
+                          type="text"
+                          value={extra.offerTitle}
+                          onChange={(e) => setExtra({ ...extra, offerTitle: e.target.value })}
+                          className="bg-background focus-visible:border-[#c6a15b]"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-semibold text-foreground">অফার শেষ হওয়ার তারিখ ও সময় (ঐচ্ছিক, YYYY-MM-DDTHH:MM:SS)</Label>
+                        <Input
+                          type="text"
+                          placeholder="2026-12-31T23:59:59"
+                          value={extra.offerEndsAt}
+                          onChange={(e) => setExtra({ ...extra, offerEndsAt: e.target.value })}
+                          className="bg-background focus-visible:border-[#c6a15b]"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Payment methods & navigation links */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-semibold text-foreground">পেমেন্ট মেথড (কমা-বিভক্ত: visa,mastercard,bkash,nagad,rocket,cod)</Label>
+                        <Input
+                          type="text"
+                          value={extra.paymentMethodsText}
+                          onChange={(e) => setExtra({ ...extra, paymentMethodsText: e.target.value })}
+                          className="bg-background focus-visible:border-[#c6a15b]"
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-semibold text-foreground">ন্যাভিগেশন লিংকসমূহ (Label | Anchor)</Label>
+                        <Textarea
+                          value={extra.navText}
+                          onChange={(e) => setExtra({ ...extra, navText: e.target.value })}
+                          rows={4}
+                          className="bg-background resize-none focus-visible:border-[#c6a15b] text-xs font-mono"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Specifications */}
+                    <div className="space-y-1.5">
+                      <Label className="text-xs font-semibold text-foreground">প্রোডাক্ট স্পেসিফিকেশন (প্রতি লাইনে: Label | Value)</Label>
+                      <Textarea
+                        value={extra.specsText}
+                        onChange={(e) => setExtra({ ...extra, specsText: e.target.value })}
+                        rows={6}
+                        className="bg-background resize-none focus-visible:border-[#c6a15b] leading-relaxed text-xs font-mono"
+                      />
+                    </div>
+
+                    {/* Stats */}
+                    <div className="space-y-1.5">
+                      <Label className="text-xs font-semibold text-foreground">পরিসংখ্যান কাউন্টার (প্রতি লাইনে: Value | Label)</Label>
+                      <Textarea
+                        value={extra.statsText}
+                        onChange={(e) => setExtra({ ...extra, statsText: e.target.value })}
+                        rows={4}
+                        className="bg-background resize-none focus-visible:border-[#c6a15b] leading-relaxed text-xs font-mono"
+                      />
+                    </div>
+
+                    {/* Reviews */}
+                    <div className="space-y-1.5">
+                      <Label className="text-xs font-semibold text-foreground">গ্রাহক রিভিউ তালিকা (প্রতি লাইনে: Name | City/Badge | Comment | Rating(1-5) | ImageURL)</Label>
+                      <Textarea
+                        value={extra.reviewsText}
+                        onChange={(e) => setExtra({ ...extra, reviewsText: e.target.value })}
+                        rows={6}
+                        className="bg-background resize-none focus-visible:border-[#c6a15b] leading-relaxed text-xs font-mono"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Sidebar Images Panel */}
@@ -1315,6 +1559,7 @@ export default function WebsiteContentPage() {
             } as any}
           >
             <LandingPage 
+              isPreview={true}
               product={{
                 ...product,
                 name: formData.name,
@@ -1352,7 +1597,21 @@ export default function WebsiteContentPage() {
                 showBadges: formData.showBadges,
                 facebookUrl: formData.facebookUrl,
                 instagramUrl: formData.instagramUrl,
-                youtubeUrl: formData.youtubeUrl
+                youtubeUrl: formData.youtubeUrl,
+                specs: parsePipe(extra.specsText, ['label', 'value']).map((o) => ({ label: o.label, value: o.value })),
+                productReviews: parsePipe(extra.reviewsText, ['name', 'city', 'text', 'rating', 'image']).map((r: Record<string, string>) => ({ name: r.name, city: r.city, text: r.text, rating: Number(r.rating) || 5, image: r.image || '' })),
+                stats: parsePipe(extra.statsText, ['value', 'label']).map((o) => ({ value: o.value, label: o.label })),
+                navLinks: parsePipe(extra.navText, ['label', 'anchor']).map((o) => ({ label: o.label, anchor: o.anchor })),
+                ratingAverage: extra.ratingAverage,
+                ratingCount: extra.ratingCount,
+                ratingBars: extra.ratingBarsText.split(',').map((n) => Number(n.trim()) || 0).slice(0, 5),
+                paymentMethods: extra.paymentMethodsText.split(',').map((x) => x.trim().toLowerCase()).filter(Boolean),
+                offerTitle: extra.offerTitle,
+                offerEndsAt: extra.offerEndsAt,
+                showSpecs: extra.showSpecs,
+                showStats: extra.showStats,
+                showOffer: extra.showOffer,
+                showCart: extra.showCart
               }}
             />
           </div>

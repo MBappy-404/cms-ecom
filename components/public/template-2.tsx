@@ -285,7 +285,7 @@ export default function Template2({ product }: Template2Props) {
     >
       {/* Header Bar matching Template 2 Colors */}
       <header className="bg-[#1a365d]/90 backdrop-blur-md text-white sticky top-0 z-40 shadow-md border-b border-white/5">
-        <div className="max-w-[1250px] mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-[1400px] mx-auto px-4 py-3 flex items-center justify-between">
 
           {/* Left Brand Details */}
           <div className="flex items-center gap-3">
@@ -325,7 +325,7 @@ export default function Template2({ product }: Template2Props) {
 
       {/* 2. Hero Section */}
       <section className="bg-[#f8fafc]/40 border-b border-slate-100/50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-4xl md:text-5xl font-black text-[#1a365d] mb-5 leading-tight tracking-tight">
               {product.heroTitle ? sanitizeName(product.heroTitle) : sanitizeName(product.name)}
@@ -343,8 +343,8 @@ export default function Template2({ product }: Template2Props) {
             </p>
 
             <div className="flex items-center gap-4 mb-8">
-              <span className="text-4xl font-extrabold text-[#1a365d]">৳ {toBanglaNum(Math.round(discountedPrice * 110))}</span>
-              <span className="text-xl text-gray-400 line-through font-semibold">৳ {toBanglaNum(Math.round(product.price * 110))}</span>
+              <span className="text-4xl font-extrabold text-[#1a365d]">৳ {toBanglaNum(Math.round(discountedPrice))}</span>
+              <span className="text-xl text-gray-400 line-through font-semibold">৳ {toBanglaNum(Math.round(product.price))}</span>
               <span className="bg-[#1a365d] text-white text-xs px-3.5 py-1.5 rounded-full font-bold shadow-2xs">{toBanglaNum(product.discount)}% ছাড়</span>
             </div>
 
@@ -401,7 +401,7 @@ export default function Template2({ product }: Template2Props) {
 
       {/* 3. Trust Banner */}
       <div className="bg-[#1a365d] text-white py-6">
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-5 gap-4 text-center text-sm">
+        <div className="max-w-[1400px] mx-auto px-4 grid grid-cols-2 md:grid-cols-5 gap-4 text-center text-sm">
           <div>সারাদেশে ডেলিভারি <br /><span className="text-xs text-blue-200">২-৩ দিনের মধ্যে</span></div>
           <div>ক্যাশ অন ডেলিভারি <br /><span className="text-xs text-blue-200">পণ্য হাতে পেয়ে টাকা দিন</span></div>
           <div>৭ দিনের রিটার্ন <br /><span className="text-xs text-blue-200">সহজ রিটার্ন সুবিধা</span></div>
@@ -411,7 +411,7 @@ export default function Template2({ product }: Template2Props) {
       </div>
 
       {/* 4. Product Gallery */}
-      <section className="max-w-7xl mx-auto px-4 py-12">
+      <section className="max-w-[1400px] mx-auto px-4 py-12">
         <h3 className="text-2xl font-bold text-[#1a365d] mb-6 border-b pb-2">প্রোডাক্ট গ্যালারি</h3>
         <div className="flex flex-col md:flex-row gap-4">
           <div className="w-full md:w-3/4 h-[500px] bg-slate-50 rounded-lg relative overflow-hidden border border-slate-200/80 shadow-md">
@@ -452,7 +452,7 @@ export default function Template2({ product }: Template2Props) {
       </section>
 
       {/* 6. Video & Bullet Points */}
-      <section id="product-video" className="max-w-7xl mx-auto px-4 py-12 border-t border-slate-100">
+      <section id="product-video" className="max-w-[1400px] mx-auto px-4 py-12 border-t border-slate-100">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <div>
             <h3 className="text-2xl font-bold text-[#1a365d] mb-6 flex items-center gap-2"><Play size={20} className="text-[#1a365d]" /> প্রোডাক্ট ভিডিও দেখুন</h3>
@@ -497,7 +497,7 @@ export default function Template2({ product }: Template2Props) {
       </section>
 
       {/* Customer Reviews Section */}
-      <section className="max-w-7xl mx-auto px-4 py-12 border-t border-slate-100">
+      <section className="max-w-[1400px] mx-auto px-4 py-12 border-t border-slate-100">
         <h3 className="text-2xl font-bold text-[#1a365d] mb-6 border-b pb-2 text-center">আমাদের কাস্টমারদের রিভিউ</h3>
 
         {/* Tabs */}
@@ -538,7 +538,7 @@ export default function Template2({ product }: Template2Props) {
               className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 relative"
             >
               {textReviews.slice(0, 3).map((review, idx) => (
-                <div key={idx} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition duration-200">
+                <div key={idx} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-out">
                   <div className="flex gap-3 mb-4">
                     <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center font-bold text-[#1a365d] overflow-hidden relative">
                       {review.avatar ? (
@@ -576,7 +576,7 @@ export default function Template2({ product }: Template2Props) {
                 { name: 'ইশতিয়াক আহমেদ', message: 'ব্যবহার করতে খুব আরামদায়ক ও নিখুঁত ফিনিশিং।', img: photoReviews[2] },
                 { name: 'সায়েম চৌধুরী', message: 'অর্ডার করার ৩ দিনের মধ্যেই ডেলিভারি পেয়ে গেলাম। ধন্যবাদ।', img: photoReviews[3] },
               ].map((item, idx) => (
-                <div key={idx} className="bg-white p-3 rounded-lg shadow-xs border border-gray-100 hover:shadow-md transition duration-200">
+                <div key={idx} className="bg-white p-3 rounded-lg shadow-xs border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-out">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-6 h-6 bg-[#1a365d] rounded-full flex items-center justify-center text-[10px] text-white font-bold select-none">
                       {item.name[0]}
@@ -599,7 +599,7 @@ export default function Template2({ product }: Template2Props) {
       </section>
 
       {/* FAQ Accordion & CTA Banner Section */}
-      <section className="max-w-7xl mx-auto px-4 mb-12">
+      <section className="max-w-[1400px] mx-auto px-4 mb-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
 
           {/* Left Column: FAQ Accordion */}
@@ -689,7 +689,7 @@ export default function Template2({ product }: Template2Props) {
       {/* 7. Order Form Section */}
       
       {/* 4.5 Call and WhatsApp Section */}
-      <section className="max-w-7xl mx-auto px-4 mb-8">
+      <section className="max-w-[1400px] mx-auto px-4 mb-8">
         <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
             <h3 className="text-xl sm:text-2xl font-black text-slate-800 mb-2">প্রয়োজনে সরাসরি যোগাযোগ করুন</h3>
@@ -721,7 +721,7 @@ export default function Template2({ product }: Template2Props) {
         </div>
       </section>
 
-      <section id="order-form" className="max-w-7xl mx-auto px-4 py-12 scroll-mt-6 border-t border-slate-100">
+      <section id="order-form" className="max-w-[1400px] mx-auto px-4 py-12 scroll-mt-6 border-t border-slate-100">
         <h3 className="text-2xl font-bold text-[#1a365d] mb-6 border-b pb-2 text-center">অর্ডার করতে নিচের ফর্মটি পূরণ করুন</h3>
         <div className="grid lg:grid-cols-3 gap-8">
 
@@ -888,13 +888,13 @@ export default function Template2({ product }: Template2Props) {
             </div>
 
             <div className="space-y-3 text-sm text-gray-655 mb-6 border-b border-gray-100 pb-6">
-              <div className="flex justify-between"><span>প্রাইস</span><span className="font-bold text-gray-850">৳{toBanglaNum(Math.round(discountedPrice * quantity * 110))}</span></div>
+              <div className="flex justify-between"><span>প্রাইস</span><span className="font-bold text-gray-850">৳{toBanglaNum(Math.round(discountedPrice * quantity))}</span></div>
               <div className="flex justify-between"><span>ডেলিভারি চার্জ</span><span className="font-bold text-gray-855">৳{toBanglaNum(deliveryFee)}</span></div>
             </div>
 
             <div className="flex justify-between items-center mb-8">
               <span className="font-bold text-gray-800 text-lg">মোট পরিমান</span>
-              <span className="text-2xl font-bold text-[#1a365d]">৳{toBanglaNum(Math.round(discountedPrice * quantity * 110) + deliveryFee)}</span>
+              <span className="text-2xl font-bold text-[#1a365d]">৳{toBanglaNum(Math.round(discountedPrice * quantity) + deliveryFee)}</span>
             </div>
 
             <div className="space-y-4 bg-gray-50 p-4 rounded-lg border border-gray-100 text-sm">
@@ -916,7 +916,7 @@ export default function Template2({ product }: Template2Props) {
       </section>
 
       {/* Dedicated Customer Review Submission Section */}
-      <section className="max-w-7xl mx-auto px-4 mb-12">
+      <section className="max-w-[1400px] mx-auto px-4 mb-12">
         <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-sm border border-gray-100">
           <h3 className="text-xl font-bold text-[#1a365d] mb-2 text-center">আপনার মূল্যবান মতামত দিন</h3>
           <p className="text-xs text-slate-500 text-center mb-6">আমাদের প্রোডাক্ট আপনার কেমন লেগেছে? ছবি ও টেক্সটের মাধ্যমে আমাদের জানান!</p>
@@ -990,7 +990,7 @@ export default function Template2({ product }: Template2Props) {
 
       {/* 8. Footer CTA & Footer */}
       <footer className="bg-[#1a365d] text-white mt-12 pt-12 pb-8">
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-[1400px] mx-auto px-4">
           {/* Top: Brand + Contact + Social */}
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 mb-8">
             

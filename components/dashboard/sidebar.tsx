@@ -20,6 +20,7 @@ import {
   MessageSquare,
 } from 'lucide-react';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 const menuItems = [
@@ -90,20 +91,30 @@ export default function Sidebar() {
                   href={item.href}
                   onClick={() => setIsOpen(false)}
                   className={cn(
-                    'flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-200 text-sm relative group',
+                    'flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors duration-200 text-sm relative group',
                     isActive
-                      ? 'bg-primary/10 text-primary font-semibold shadow-inner'
+                      ? 'text-primary font-semibold'
                       : 'text-sidebar-foreground/75 hover:text-sidebar-foreground hover:bg-sidebar-accent/50'
                   )}
                 >
-                  <Icon 
-                    size={18} 
+                  {isActive && (
+                    <motion.span
+                      layoutId="sidebar-active"
+                      className="absolute inset-0 rounded-xl bg-primary/10 shadow-inner"
+                      transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                    />
+                  )}
+                  {isActive && (
+                    <span className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-primary" />
+                  )}
+                  <Icon
+                    size={18}
                     className={cn(
-                      'transition-colors duration-250',
+                      'relative z-10 transition-all duration-200 group-hover:scale-110',
                       isActive ? 'text-primary' : 'text-sidebar-foreground/60 group-hover:text-sidebar-foreground'
-                    )} 
+                    )}
                   />
-                  <span className="truncate">{item.label}</span>
+                  <span className="relative z-10 truncate">{item.label}</span>
                 </Link>
               );
             })}

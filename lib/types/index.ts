@@ -40,6 +40,8 @@ export interface Product {
   storeName?: string;
   storeTagline?: string;
   storePhone?: string;
+  heroEyebrow?: string;
+  headerPills?: string[];
   heroTitle?: string;
   heroSubtitle?: string;
   customerStatsTitle?: string;
@@ -56,6 +58,22 @@ export interface Product {
   facebookUrl?: string;
   instagramUrl?: string;
   youtubeUrl?: string;
+  // — PureSip-style sections (all dashboard-editable) —
+  specs?: { label: string; value: string }[];
+  productReviews?: { name: string; city: string; text: string; rating?: number; image?: string }[];
+  ratingAverage?: string;
+  ratingCount?: string;
+  ratingBars?: number[]; // 5 values: %% for 5★,4★,3★,2★,1★
+  stats?: { value: string; label: string }[];
+  offerEnabled?: boolean;
+  offerTitle?: string;
+  offerEndsAt?: string; // ISO datetime
+  paymentMethods?: string[]; // e.g. visa, mastercard, bkash, nagad, rocket, cod
+  navLinks?: { label: string; anchor: string }[];
+  showCart?: boolean;
+  showSpecs?: boolean;
+  showStats?: boolean;
+  showOffer?: boolean;
 }
 
 export interface Category {
