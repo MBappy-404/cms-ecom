@@ -79,6 +79,7 @@ export default function Template3({ product }: Template3Props) {
   const [playVideo, setPlayVideo] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
+  const [placedOrderId, setPlacedOrderId] = useState<string | null>(null);
   const [formData, setFormData] = useState({ name: '', phone: '', address: '' });
 
   // Review submission (mirrors Template 1/2)
@@ -240,13 +241,54 @@ export default function Template3({ product }: Template3Props) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.name || !formData.phone || !formData.address) return;
+
     setIsSubmitting(true);
+    const orderIdNum = `ORD-${Date.now().toString().slice(-6)}`;
+    const totalAmount = Math.round(discountedPrice * quantity) + deliveryFee;
+
+    const newOrder = {
+      id: orderIdNum,
+      shopId: product.shopId || '1',
+      customerId: Date.now().toString(),
+      customerName: formData.name,
+      customerEmail: `${formData.phone}@store.local`,
+      products: [
+        {
+          id: product.id,
+          name: `${product.name} (${selectedSize ? `সাইজ: ${selectedSize}` : ''}${selectedColor ? `, কালার: ${selectedColor}` : ''})`,
+          quantity,
+          price: Math.round(discountedPrice),
+          subtotal: Math.round(discountedPrice * quantity),
+        }
+      ],
+      subtotal: Math.round(discountedPrice * quantity),
+      shipping: deliveryFee,
+      tax: 0,
+      total: totalAmount,
+      status: 'pending',
+      paymentMethod: 'ক্যাশ অন ডেলিভারি (COD)',
+      paymentStatus: 'বাকি (Unpaid)',
+      shippingAddress: `${formData.address} (ফোন: ${formData.phone}, এলাকা: ${deliveryArea === 'dhaka' ? 'ঢাকার ভেতরে' : 'ঢাকার বাইরে'})`,
+      createdAt: new Date().toISOString(),
+    };
+
+    try {
+      const stored = localStorage.getItem('orders');
+      const existing = stored ? JSON.parse(stored) : [];
+      localStorage.setItem('orders', JSON.stringify([newOrder, ...existing]));
+      window.dispatchEvent(new Event('orders-updated'));
+    } catch (err) {
+      console.error('Order save error:', err);
+    }
+
     setTimeout(() => {
       setIsSubmitting(false);
+      setPlacedOrderId(orderIdNum);
       setOrderSuccess(true);
       setFormData({ name: '', phone: '', address: '' });
-      setTimeout(() => setOrderSuccess(false), 8000);
-    }, 1600);
+      setTimeout(() => setOrderSuccess(false), 12000);
+    }, 900);
   };
 
   const handleReviewSubmit = (e: React.FormEvent) => {
@@ -804,10 +846,37 @@ export default function Template3({ product }: Template3Props) {
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[#1a365d] placeholder:text-slate-400 outline-none focus:border-blue-600 transition-colors focus:bg-white"
                   />
                   
-                  <select value={deliveryArea} onChange={(e) => setDeliveryArea(e.target.value as 'dhaka' | 'outside')} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[#1a365d] outline-none focus:border-blue-600 cursor-pointer focus:bg-white">
-                    <option value="dhaka">ঢাকার ভেতরে — ৳{toBn(deliveryFeeDhaka)}</option>
-                    <option value="outside">ঢাকার বাইরে — ৳{toBn(deliveryFeeOutside)}</option>
-                  </select>
+                  <div className="grid grid-cols-2 gap-3 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => setDeliveryArea('dhaka')}
+                      className={`p-3 rounded-xl border text-left cursor-pointer transition-all ${
+                        deliveryArea === 'dhaka'
+                          ? 'border-blue-600 bg-blue-50/60 ring-2 ring-blue-500/20'
+                          : 'border-slate-200 bg-slate-50 hover:bg-slate-100'
+                      }`}
+                    >
+                      <div className="flex justify-between items-center text-xs font-bold text-slate-800">
+                        <span>ঢাকার ভেতরে</span>
+                        <span className="text-blue-600">৳{toBn(deliveryFeeDhaka)}</span>
+                      </div>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setDeliveryArea('outside')}
+                      className={`p-3 rounded-xl border text-left cursor-pointer transition-all ${
+                        deliveryArea === 'outside'
+                          ? 'border-blue-600 bg-blue-50/60 ring-2 ring-blue-500/20'
+                          : 'border-slate-200 bg-slate-50 hover:bg-slate-100'
+                      }`}
+                    >
+                      <div className="flex justify-between items-center text-xs font-bold text-slate-800">
+                        <span>ঢাকার বাইরে</span>
+                        <span className="text-blue-600">৳{toBn(deliveryFeeOutside)}</span>
+                      </div>
+                    </button>
+                  </div>
 
                   <div className="space-y-2 pt-3 border-t border-slate-100 text-sm">
                     <div className="flex justify-between text-slate-500"><span>সাবটোটাল</span><span className="text-[#1a365d] font-semibold">৳{toBn(Math.round(discountedPrice * quantity))}</span></div>
@@ -820,7 +889,10 @@ export default function Template3({ product }: Template3Props) {
                   </button>
                   <p className="text-center text-[10px] text-slate-400 flex items-center justify-center gap-1.5"><Shield size={13} /> ১০০% নিরাপদ পেমেন্ট ও ক্যাশ অন ডেলিভারি</p>
                   {orderSuccess && (
-                    <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="text-center text-xs text-green-700 font-semibold">✓ ধন্যবাদ! আমাদের প্রতিনিধি শীঘ্রই যোগাযোগ করবে।</motion.p>
+                    <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="p-3 bg-green-50 border border-green-200 rounded-xl text-center">
+                      <p className="text-xs text-green-800 font-bold">✓ ধন্যবাদ! আপনার অর্ডারটি গৃহীত হয়েছে।</p>
+                      <p className="text-[11px] text-green-700 font-mono mt-0.5">অর্ডার আইডি: {placedOrderId}</p>
+                    </motion.div>
                   )}
                   <div className="grid grid-cols-2 gap-3 pt-2">
                     {product.storePhone && (
@@ -969,6 +1041,22 @@ export default function Template3({ product }: Template3Props) {
           </svg>
         </a>
       )}
+      {/* ── Sticky Mobile Purchase Bar ── */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 shadow-xl flex items-center justify-between gap-3">
+        <div>
+          <span className="text-xs font-black text-[#1a365d] block">
+            ৳{toBn(Math.round(discountedPrice))}
+          </span>
+          <span className="text-[10px] text-slate-500">ক্যাশ অন ডেলিভারি</span>
+        </div>
+        <button
+          type="button"
+          onClick={() => scrollTo('order')}
+          className="bg-blue-600 hover:bg-blue-700 text-white font-black text-xs px-6 py-2.5 rounded-xl shadow-md cursor-pointer border-none flex items-center gap-1.5"
+        >
+          <ShoppingBag size={14} /> অর্ডার করুন
+        </button>
+      </div>
     </motion.div>
   );
 }

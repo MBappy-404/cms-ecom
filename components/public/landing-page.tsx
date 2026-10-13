@@ -28,7 +28,7 @@ export default function LandingPage({ product, isPreview = false }: LandingPageP
   }, [product]);
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] font-sans text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-[#f4f7fb] font-sans text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
       {/* Floating Selector to Preview Template 1, 2 or 3 */}
       <div className="fixed bottom-6 right-6 z-50 bg-slate-900/90 backdrop-blur-md border border-slate-800/80 rounded-lg p-1.5 shadow-2xl flex items-center gap-1.5 transition-all duration-200">
         <span className="text-[9px] font-bold text-slate-400 uppercase px-2 select-none">টেমপ্লেট:</span>
